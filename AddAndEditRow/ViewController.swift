@@ -14,14 +14,19 @@ class ViewController: UIViewController {
     let Placeholder = "Enter the description"
     // MARK: Outlets
     @IBOutlet weak var tableView: UITableView!
+    //Added the outlet to disable the button until the new row add action did finish
     @IBOutlet weak var btnAddRow: UIBarButtonItem!
     // MARK: Ivars
+    // Should be in a proper struct model, but this is just a simple example of
+    // functionality
     var dataArray: Array<String> = ["Row one", "Row two", "Row Three"]
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Dont show empty rows
         tableView.tableFooterView = UIView(frame: .zero)
+        //Add refresh on drag down functionallity
         let refreshControl = UIRefreshControl()
         tableView.refreshControl = refreshControl
         tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
@@ -50,6 +55,8 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Identifier, for: indexPath)
         let text = dataArray[indexPath.row]
+        // Using here a simple text comparation to determine what kind
+        // of cell will be shown
         if text == Placeholder {
             let addButton = UIButton(type: .contactAdd) as UIButton
             addButton.addTarget(self, action:#selector(addDidTap(_:)), for: .touchUpInside)
@@ -112,6 +119,7 @@ extension ViewController: UITextFieldDelegate {
 extension ViewController {
     
     // Configure the cell to add a UITextField to enter the text
+    // No parameters needed due class properties
     private func configureEditCell(){
         let indexPath = IndexPath(row: dataArray.count - 1, section: 0)
         //Insert a new row at the bottom of the table
