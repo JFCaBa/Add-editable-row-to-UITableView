@@ -1,2 +1,2 @@
 # Add-editable-row-to-UITableView
-![](AddRowToUITableViewgif)
+![](AddRowToUITableView.gif)
