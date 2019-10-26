@@ -35,7 +35,8 @@ class ViewController: UIViewController {
     // MARK: - Actions
     @IBAction func addNewRowDidTap(_ sender: Any) {
         btnAddRow.isEnabled = false
-        dataArray.append(Placeholder)
+//        dataArray.append(Placeholder)
+        dataArray.insert(Placeholder, at: 0)
         configureEditCell()
     }
     
@@ -99,13 +100,13 @@ extension ViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         //Double check if the user did delete the row before end Editing was performed
         if textField.tag >= dataArray.count { return }
-        dataArray.remove(at: dataArray.count - 1)
+        dataArray.remove(at: 0)
         //Check if textField is nil
         guard let text = textField.text else { return }
         //Check if textField has no text
         if text.count == 0 { return }
         //Add the text to the array
-        dataArray.append(text)
+        dataArray.insert(text, at: 0)
         //Remove the textField from the view
         textField.removeFromSuperview()
         //Reload the table to show the results
@@ -121,7 +122,7 @@ extension ViewController {
     // Configure the cell to add a UITextField to enter the text
     // No parameters needed due class properties
     private func configureEditCell(){
-        let indexPath = IndexPath(row: dataArray.count - 1, section: 0)
+        let indexPath = IndexPath(row: 0, section: 0)
         //Insert a new row at the bottom of the table
         tableView.beginUpdates()
         tableView.insertRows(at: [indexPath], with: .automatic)
